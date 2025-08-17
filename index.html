@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOXRATE | Hacking Team</title>
+    <style>
+        :root {
+            --green: #00ff41;
+            --black: #0d0208;
+            --dark: #003b00;
+        }
+        body {
+            background-color: var(--black);
+            color: var(--green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        .terminal {
+            border: 1px solid var(--green);
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        .prompt {
+            color: var(--green);
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        .team-list {
+            margin: 1rem 0;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    
+    <div class="terminal">
+        <p><span class="prompt">root@noxrate:~#</span> whoami</p>
+        <p>NOXRATE Hacking Team - Basit ve etkili çözümler</p>
+        
+        <p><span class="prompt">root@noxrate:~#</span> date</p>
+        <p id="current-date"></p>
+        
+        <p><span class="prompt">root@noxrate:~#</span> cat about.txt</p>
+        <p>NOXRATE olarak hacking ve güvenlik alanında faaliyet gösteriyoruz.</p>
+        <p>Basit ve etkili yöntemlerle işimizi yapıyoruz.</p>
+        
+        <p><span class="prompt">root@noxrate:~#</span> ls -la /team/</p>
+        <div class="team-list">
+            <p>► Mhdragon</p>
+            <p>► Blodwhite</p>
+            <p>► ve daha niceleri...</p>
+        </div>
+        
+        <p><span class="prompt">root@noxrate:~#</span> cat mission.txt</p>
+        <p>Zafiyet araştırmaları yapmak ve güvenlik açıklarını bulmak.</p>
+        
+        <p><span class="prompt">root@noxrate:~#</span> <span class="blink">_</span></p>
+    </div>
+
+    <script>
+        // Matrix efekti
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "01";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(13, 2, 8, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 33);
+        
+        // Tarih güncelleme
+        document.getElementById('current-date').textContent = new Date().toLocaleString();
+        
+        // Yazı yazma efekti
+        const commands = [
+            "scan --target=all",
+            "analyze --vulnerabilities",
+            "exploit --type=remote",
+            "bypass --security=firewall",
+            "access --level=root"
+        ];
+        
+        setInterval(() => {
+            const prompt = document.querySelector('.prompt');
+            if (prompt && prompt.nextElementSibling && prompt.nextElementSibling.classList.contains('blink')) {
+                prompt.nextElementSibling.textContent = commands[Math.floor(Math.random() * commands.length)];
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
